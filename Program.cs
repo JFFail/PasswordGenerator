@@ -20,7 +20,52 @@ namespace PasswordGenerator
             Console.WriteLine("-n\t\tSpecify the number of passwords you want to generate. Default: 1.");
             Console.WriteLine("-c\t\tSpecify that complexity should be used.");
             
-        }
+        }   //Closes PrintHelp()
+
+        static void GeneratePassword(int passLength, int numPasswords, bool isComplex)
+        {
+            //Define the range of possible values.
+            string[] passChars = new string[] { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-", "_", "=", "+", "{", "}", "[", "]", "|", ".", ",", "<", ">", ":", ";" };
+            int numberCharsPicked;
+            int numberPasswordsGenerated = 0;
+            const int simpleMaxIndex = 62;
+            const int complexMaxIndex = 87;
+            string passValue;
+            int currentIndex;
+            Random randomGenerator = new Random(DateTime.Now.Millisecond);
+
+            while(numberPasswordsGenerated < numPasswords)
+            {
+                //Reset these for when we have multiple passwords.
+                numberCharsPicked = 0;
+                passValue = "";
+
+                if(isComplex)
+                {
+                    while (numberCharsPicked < passLength)
+                    {
+                        currentIndex = randomGenerator.Next(0, complexMaxIndex + 1);
+                        passValue += passChars[currentIndex];
+                        numberCharsPicked++;
+                    }
+
+                    Console.WriteLine("{0}", passValue);
+                }
+                else
+                {
+                    while(numberCharsPicked < passLength)
+                    {
+                        currentIndex = randomGenerator.Next(0, simpleMaxIndex + 1);
+                        passValue += passChars[currentIndex];
+                        numberCharsPicked++;
+                    }
+
+                    Console.WriteLine("{0}", passValue);
+                }
+
+                numberPasswordsGenerated++;
+            }   //Closes while loop for number of passwords.
+        }   //Closes function to perform password generation.
 
         static void Main(string[] args)
         {
@@ -98,14 +143,7 @@ namespace PasswordGenerator
                         //Now actually calculate the password.
                         if(!broken)
                         {
-                            if (isComplex)
-                            {
-                                Console.WriteLine("Calculating {0} complex passwords of length {1}.", numPasswords.ToString(), passLen.ToString());
-                            }
-                            else
-                            {
-                                Console.WriteLine("Calculating {0} simple passwords of length {1}.", numPasswords.ToString(), passLen.ToString());
-                            }
+                            GeneratePassword(passLen, numPasswords, isComplex);
                         }
                     }
                     else
@@ -113,12 +151,8 @@ namespace PasswordGenerator
                         Console.WriteLine("\nCannot have a password of length: {0}\n", passLenStr);
                         PrintHelp();
                     }
-                }
-
-                //Define the range of possible values.
-                string[] passChars = new string[] { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-", "_", "=", "+", "{", "}", "[", "]", "|", ".", ",", "<", ">", ":", ";" };
-            }
-
-        }
-    }
+                }   //Closes else conditional determining if -? or -h had been passed.
+            }   //Closes else conditional based on the number of arguments passed.
+        }   //Closes main().
+    }   //Closes the class.
 }
