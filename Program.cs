@@ -125,7 +125,7 @@ namespace PasswordGenerator
                                 //Continue on only if we have joy in parsing.
                                 if (!successfulNumParse)
                                 {
-                                    Console.WriteLine("\nCannot have \"{0}\" passwords!\n", passLenStr);
+                                    Console.WriteLine("\nCannot have \"{0}\" passwords!\n", numPassStr);
                                     PrintHelp();
                                     broken = true;
                                 }
@@ -135,7 +135,6 @@ namespace PasswordGenerator
                                 Console.WriteLine("\nOut of bounds! Check the order of your parameters.\n");
                                 PrintHelp();
                                 broken = true;
-                                
                             }
                             
                         }
